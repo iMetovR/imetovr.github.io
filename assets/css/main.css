@@ -935,12 +935,12 @@ input, select, textarea {
 		overflow-x: auto;
 	}
 
-	table {
-		margin: 0 0 2rem 0;
-		width: 100%;
-	}
+        table { 
+                margin: 0 0 2rem 0;
+                width: 100%;
+        }
 
-		table tbody tr {
+                table tbody tr {
 			border: solid 1px #ffffff;
 			border-left: 0;
 			border-right: 0;
@@ -992,9 +992,26 @@ input, select, textarea {
 				border-bottom: 0;
 			}
 
-			table.alt tfoot {
-				border-top: 0;
-			}
+                        table.alt tfoot {
+                                border-top: 0;
+                        }
+
+        .price-table td,
+        .price-table th {
+                vertical-align: top;
+        }
+
+        .price-table th:first-child,
+        .price-table td:first-child {
+                text-align: left;
+                width: 65%;
+        }
+
+        .price-table th:not(:first-child),
+        .price-table td:not(:first-child) {
+                text-align: right;
+                white-space: nowrap;
+        }
 
 /* Button */
 
