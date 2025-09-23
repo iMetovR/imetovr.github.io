@@ -615,7 +615,7 @@ input, select, textarea {
 			text-rendering: auto;
 			line-height: 1;
 			text-transform: none !important;
-			font-family: 'Font Awesome 5 Free';
+			font-family: 'Font Awesome 7';
 			font-weight: 400;
 		}
 
@@ -632,7 +632,7 @@ input, select, textarea {
 		}
 
 		.icon.brands:before {
-			font-family: 'Font Awesome 5 Brands';
+			font-family: 'Font Awesome 7 Brands';
 		}
 
 /* Image */
@@ -701,6 +701,15 @@ input, select, textarea {
 		}
 
 			.image.main img {
+				width: 100%;
+			}
+		.image.ava {
+			display: block;
+			margin: 2.5rem 0;
+			width: 20%;
+		}
+
+			.image.ava img {
 				width: 100%;
 			}
 
