@@ -434,15 +434,6 @@
 		                        section.className = 'pricing-category';
 		                        section.setAttribute('data-category', categoryName);
 
-                                        var header = document.createElement('header');
-                                        header.className = 'pricing-category__header';
-
-                                        var title = document.createElement('h3');
-                                        title.textContent = categoryName;
-
-                                        header.appendChild(title);
-                                        section.appendChild(header);
-
 		                        var list = document.createElement('div');
 		                        list.className = 'pricing-list';
 
