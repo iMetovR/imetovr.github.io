@@ -437,16 +437,11 @@
 		                        var header = document.createElement('header');
 		                        header.className = 'pricing-category__header';
 
-		                        var eyebrow = document.createElement('span');
-		                        eyebrow.className = 'pricing-category__eyebrow';
-		                        eyebrow.textContent = 'Категория';
+                                        var title = document.createElement('h3');
+                                        title.textContent = categoryName;
 
-		                        var title = document.createElement('h3');
-		                        title.textContent = categoryName;
-
-		                        header.appendChild(eyebrow);
-		                        header.appendChild(title);
-		                        section.appendChild(header);
+                                        header.appendChild(title);
+                                        section.appendChild(header);
 
 		                        var list = document.createElement('div');
 		                        list.className = 'pricing-list';
