@@ -385,6 +385,122 @@
 
 			}
 
+				// Pricing setup.
+
+		var pricingList = document.querySelector('#pricing-list');
+		var currencySelect = document.querySelector('#pricing-currency');
+
+		if (pricingList && currencySelect) {
+
+		        var currencyFormatters = {
+		                'price-uzs': function(value) {
+		                        return value.toLocaleString('ru-RU') + ' сум';
+		                },
+		                'price-rub': function(value) {
+		                        return value.toLocaleString('ru-RU') + ' ₽';
+		                },
+		                'price-usd': function(value) {
+		                        return '$' + value.toLocaleString('ru-RU');
+		                }
+		        };
+
+		        var pricingData = [];
+
+		        var renderPricing = function(currencyKey) {
+		                var formatter = currencyFormatters[currencyKey] || currencyFormatters['price-uzs'];
+
+		                pricingList.innerHTML = '';
+
+		                var sorted = pricingData.slice().sort(function(a, b) {
+		                        return (a.id || 0) - (b.id || 0);
+		                });
+
+		                var categories = new Map();
+
+		                sorted.forEach(function(item) {
+		                        if (!categories.has(item.cat))
+		                                categories.set(item.cat, []);
+
+		                        categories.get(item.cat).push(item);
+		                });
+
+		                if (categories.size === 0) {
+		                        pricingList.innerHTML = '<p class="pricing-error">Нет данных для отображения.</p>';
+		                        return;
+		                }
+
+		                categories.forEach(function(items, categoryName) {
+		                        var section = document.createElement('section');
+		                        section.className = 'pricing-category';
+		                        section.setAttribute('data-category', categoryName);
+
+		                        var header = document.createElement('header');
+		                        header.className = 'pricing-category__header';
+
+		                        var eyebrow = document.createElement('span');
+		                        eyebrow.className = 'pricing-category__eyebrow';
+		                        eyebrow.textContent = 'Категория';
+
+		                        var title = document.createElement('h3');
+		                        title.textContent = categoryName;
+
+		                        header.appendChild(eyebrow);
+		                        header.appendChild(title);
+		                        section.appendChild(header);
+
+		                        var list = document.createElement('div');
+		                        list.className = 'pricing-list';
+
+		                        items.forEach(function(service) {
+		                                var item = document.createElement('div');
+		                                item.className = 'pricing-item';
+
+		                                var name = document.createElement('span');
+		                                name.className = 'pricing-item__name';
+		                                name.textContent = service.name;
+
+		                                var price = document.createElement('span');
+		                                price.className = 'pricing-item__price';
+
+		                                var rawValue = service[currencyKey];
+		                                var numericValue = typeof rawValue === 'number' ? rawValue : Number(rawValue);
+
+		                                if (Number.isFinite(numericValue))
+		                                        price.textContent = formatter(numericValue);
+		                                else if (typeof rawValue === 'string' && rawValue.trim().length > 0)
+		                                        price.textContent = rawValue;
+		                                else
+		                                        price.textContent = '—';
+
+		                                item.appendChild(name);
+		                                item.appendChild(price);
+		                                list.appendChild(item);
+		                        });
+
+		                        section.appendChild(list);
+		                        pricingList.appendChild(section);
+		                });
+		        };
+
+		        fetch('assets/js/price.json')
+		                .then(function(response) {
+		                        if (!response.ok)
+		                                throw new Error('Network response was not ok');
+
+		                        return response.json();
+		                })
+		                .then(function(data) {
+		                        pricingData = Array.isArray(data) ? data : [];
+		                        renderPricing(currencySelect.value || 'price-uzs');
+		                })
+		                .catch(function() {
+		                        pricingList.innerHTML = '<p class="pricing-error">Не удалось загрузить список цен.</p>';
+		                });
+
+		        currencySelect.addEventListener('change', function(event) {
+		                renderPricing(event.target.value);
+		        });
+		}
 		// Initialize.
 
 			// Hide main, articles.
